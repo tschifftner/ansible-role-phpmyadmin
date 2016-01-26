@@ -1,0 +1,83 @@
+---
+- set_fact:
+    phpmyadmin_unarchiv_dir: "{{ phpmyadmin_download_url | basename | replace('.tar.gz', '') }}"
+
+- name: Create group
+  group:
+    name: '{{ phpmyadmin_group }}'
+    state: present
+
+- name: Create user
+  user:
+    name: '{{ phpmyadmin_user }}'
+    group: '{{ phpmyadmin_group }}'
+    state: present
+
+- name: Ensurce working dir exists
+  file:
+    path: '{{ phpmyadmin_working_dir }}'
+    state: directory
+
+- name: Unarchive file
+  register: phpmyadmin_extract
+  unarchive:
+    src: '{{ phpmyadmin_download_url }}'
+    dest: '{{ phpmyadmin_working_dir }}'
+    copy: no
+    owner: '{{ phpmyadmin_user }}'
+    group: '{{ phpmyadmin_group }}'
+    mode: '2755'
+    creates: '{{ phpmyadmin_working_dir }}/{{ phpmyadmin_unarchiv_dir }}'
+
+- name: Ensure setup dir is absent
+  file:
+    path: '{{ phpmyadmin_working_dir }}/{{ phpmyadmin_unarchiv_dir }}/setup'
+    state: absent
+
+- name: prepare directories
+  file:
+    path: '{{ item }}'
+    state: directory
+    owner: '{{ phpmyadmin_user }}'
+    group: '{{ phpmyadmin_group }}'
+    mode: '0711'
+  with_items:
+    - '{{ phpmyadmin_working_dir }}'
+    - '{{ phpmyadmin_working_dir }}/logs'
+    - '{{ phpmyadmin_working_dir }}/sessions'
+    - '{{ phpmyadmin_working_dir }}/usr/share/'
+
+- name: prepare directories
+  file:
+    path: '{{ item }}'
+    state: directory
+    owner: '{{ phpmyadmin_user }}'
+    group: '{{ phpmyadmin_group }}'
+    mode: '777'
+  with_items:
+    - '{{ phpmyadmin_working_dir }}/tmp'
+
+- name: copy timezone to working_dir
+  shell: cp -rf /usr/share/zoneinfo {{ phpmyadmin_working_dir }}/usr/share/
+  args:
+    creates: '{{ phpmyadmin_working_dir }}/usr/share/zoneinfo'
+
+- name: add php5-fpm config
+  template:
+    src: php5-fpm.conf
+    dest: /etc/php5/fpm/pool.d/system.pma.conf
+  notify: restart php5-fpm
+
+- name: add nginx config
+  template:
+    src: nginx.conf
+    dest: /etc/nginx/conf.d/phpmyadmin.conf
+  notify: restart nginx
+
+- name: add phpmyadmin config
+  template:
+    src: config.inc.php.j2
+    dest: '{{ phpmyadmin_working_dir }}/{{ phpmyadmin_unarchiv_dir }}/config.inc.php'
+    owner: '{{ phpmyadmin_user }}'
+    group: '{{ phpmyadmin_group }}'
+    mode: '0400'

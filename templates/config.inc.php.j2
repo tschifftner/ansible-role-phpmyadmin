@@ -1,0 +1,29 @@
+<?php
+/*
+ * {{ ansible_managed }}
+ */
+
+$i = 0;
+
+{% for server in phpmyadmin_servers %}
+$i++; // Server {{ server.host }}
+{% for key, value in server.iteritems() %}
+$cfg['Servers'][$i]['{{ key }}'] = '{{ value }}';
+{% endfor %}
+{% endfor %}
+
+/* Configuration */
+$cfg['blowfish_secret'] = '{{ phpmyadmin_blowfish_secret }}';
+$cfg['DefaultLang'] = '{{ phpmyadmin_default_lang }}';
+$cfg['ServerDefault'] = 1;
+$cfg['UploadDir'] = '{{ phpmyadmin_upload_dir }}';
+$cfg['SaveDir'] = '{{ phpmyadmin_save_dir }}';
+$cfg['MaxRows'] = {{ phpmyadmin_max_rows }};
+$cfg['MaxDbList'] = {{ phpmyadmin_max_db_list }};
+$cfg['MaxTableList'] = {{ phpmyadmin_max_table_list }};
+$cfg['SendErrorReports'] = '{{ phpmyadmin_send_error_reports }}';
+
+{% if phpmyadmin_additional_configuration != '' %}
+/* Additional configuration */
+{{ phpmyadmin_additional_configuration }}
+{% endif %}

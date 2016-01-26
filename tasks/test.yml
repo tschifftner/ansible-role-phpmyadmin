@@ -1,0 +1,7 @@
+---
+- name: Copy test.php
+  template:
+    src: 'test.php'
+    dest: '{{ phpmyadmin_working_dir }}/{{ phpmyadmin_unarchiv_dir }}/test.php'
+    mode: '755'
+

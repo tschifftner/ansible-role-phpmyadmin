@@ -1,0 +1,30 @@
+---
+phpmyadmin_install_version: '4.5.3.1'
+
+# See https://www.phpmyadmin.net/downloads/
+phpmyadmin_download_url: 'https://files.phpmyadmin.net/phpMyAdmin/{{ phpmyadmin_install_version }}/phpMyAdmin-{{ phpmyadmin_install_version }}-all-languages.tar.gz'
+
+# This hash is not secure!
+phpmyadmin_blowfish_secret:  "{{ ansible_machine_id | hash('sha1') | truncate(24, True, '') }}"
+
+phpmyadmin_default_lang: 'de'
+phpmyadmin_upload_dir: '/tmp'
+phpmyadmin_save_dir: '/tmp'
+phpmyadmin_max_rows: '/tmp'
+phpmyadmin_max_db_list: '/tmp'
+phpmyadmin_max_table_list: '/tmp'
+phpmyadmin_send_error_reports: 'never'
+
+# Use | to declare multiple values
+phpmyadmin_additional_configuration: ''
+
+phpmyadmin_user: 'pma'
+phpmyadmin_group: 'pma'
+
+# Use ip address!
+phpmyadmin_servers:
+  - host: 127.0.0.1
+    connect_type: tcp
+    auth_type: cookie
+    compress: false
+    AllowNoPassword: false

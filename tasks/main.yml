@@ -1,0 +1,6 @@
+---
+
+- include: install.yml
+
+- include: test.yml
+  when: phpmyadmin_debug is defined and phpmyadmin_debug
