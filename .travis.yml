@@ -48,8 +48,8 @@ script:
 
 
 after_failure:
-  - "sudo ls -lah /opt/phpmyadmin/"
-  - "sudo ansible --version"
+  - "ls -lah /opt/phpmyadmin/"
+  - "ansible --version"
 
 notifications:
   slack: ambimax:2MlPTX9bY9aPxCPhJGxHKIT6
