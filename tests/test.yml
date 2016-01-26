@@ -3,6 +3,10 @@
   remote_user: root
 
   vars:
+    # Use same version for testing. Use http url as ansible on travis fails with https.
+    phpmyadmin_install_version: '4.5.3.1'
+    phpmyadmin_download_url: 'https://files.phpmyadmin.net/phpMyAdmin/{{ phpmyadmin_install_version }}/phpMyAdmin-{{ phpmyadmin_install_version }}-all-languages.tar.gz'
+
     mariadb_admin_user: 'admin'
     mariadb_admin_password: 'travis'
 
