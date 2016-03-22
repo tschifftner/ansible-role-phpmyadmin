@@ -64,11 +64,14 @@
 
 - name: Ensure config directory exists
   file:
-    path: '/etc/php5/fpm/pool.d'
+    path: '{{ item }}'
     state: directory
     owner: root
     group: root
     mode: '755'
+  with_items:
+    - /etc/php5/fpm/pool.d
+    - /etc/nginx/conf.d
 
 - name: add php5-fpm config
   template:
