@@ -6,7 +6,7 @@ Installs phpMyAdmin on Debian/Ubuntu linux servers.
 
 ## Requirements
 
-nginx and php5-fpm need to be installed.
+nginx and php5-fpm need to be installed prior running this role.
 
 ## Role Variables
 
