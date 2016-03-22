@@ -21,7 +21,7 @@ install:
   # Install ansible-lint
   - pip install ansible-lint
 
-  - ansible-galaxy install -r tests/requirements.txt --ignore-errors --force
+  - ansible-galaxy install -r tests/requirements.yml --ignore-errors --force
 
 script:
   # Check the role/playbook's syntax.

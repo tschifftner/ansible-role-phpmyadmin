@@ -24,6 +24,7 @@
         encoding: utf8
 
   roles:
-#    - ansible-role-nginx
-#    - ansible-role-mariadb
+    - tschifftner.nginx
+    - tschifftner.php5-fpm
+#    - tschifftner.mariadb
     - ansible-role-phpmyadmin
