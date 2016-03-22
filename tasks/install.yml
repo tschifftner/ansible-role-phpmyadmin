@@ -26,7 +26,7 @@
     copy: no
     owner: '{{ phpmyadmin_user }}'
     group: '{{ phpmyadmin_group }}'
-    mode: '2755'
+    mode: '0755'
     creates: '{{ phpmyadmin_working_dir }}/{{ phpmyadmin_unarchiv_dir }}'
 
 - name: Ensure setup dir is absent

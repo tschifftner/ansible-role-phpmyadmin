@@ -11,9 +11,9 @@ phpmyadmin_blowfish_secret:  "{{ ansible_machine_id | hash('sha1') | truncate(24
 phpmyadmin_default_lang: 'de'
 phpmyadmin_upload_dir: '/tmp'
 phpmyadmin_save_dir: '/tmp'
-phpmyadmin_max_rows: '/tmp'
-phpmyadmin_max_db_list: '/tmp'
-phpmyadmin_max_table_list: '/tmp'
+phpmyadmin_max_rows: 500
+phpmyadmin_max_db_list: 500
+phpmyadmin_max_table_list: 500
 phpmyadmin_send_error_reports: 'never'
 
 # Use | to declare multiple values
@@ -26,6 +26,7 @@ phpmyadmin_group: 'pma'
 phpmyadmin_servers:
   - host: 127.0.0.1
     connect_type: tcp
-    auth_type: cookie
+    auth_type: http
     compress: false
     AllowNoPassword: false
+    hide_db: '(information_schema|mysql|performance_schema)'
