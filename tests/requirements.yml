@@ -1,2 +1,3 @@
-tschifftner.nginx
-tschifftner.php5-fpm
+---
+- src: tschifftner.nginx
+- src: tschifftner.php5-fpm
