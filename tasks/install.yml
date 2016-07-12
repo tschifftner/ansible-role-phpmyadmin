@@ -1,5 +1,6 @@
 ---
-- set_fact:
+- name: 'Set phpmyadmin_unarchiv_dir fact'
+  set_fact:
     phpmyadmin_unarchiv_dir: "{{ phpmyadmin_download_url | basename | replace('.tar.gz', '') }}"
 
 - name: Create group
@@ -53,12 +54,12 @@
     state: directory
     owner: '{{ phpmyadmin_user }}'
     group: '{{ phpmyadmin_group }}'
-    mode: '777'
+    mode: '0777'
   with_items:
     - '{{ phpmyadmin_working_dir }}/tmp'
 
 - name: copy timezone to working_dir
-  shell: cp -rf /usr/share/zoneinfo {{ phpmyadmin_working_dir }}/usr/share/
+  command: cp -rf /usr/share/zoneinfo {{ phpmyadmin_working_dir }}/usr/share/
   args:
     creates: '{{ phpmyadmin_working_dir }}/usr/share/zoneinfo'
 
@@ -68,7 +69,7 @@
     state: directory
     owner: root
     group: root
-    mode: '755'
+    mode: '0755'
   with_items:
     - /etc/php5/fpm/pool.d
     - /etc/nginx/conf.d
