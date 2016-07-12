@@ -36,6 +36,7 @@ None.
 Ansible          | Debian Jessie    | Ubuntu 14.04    | Ubuntu 12.04
 :--------------: | :--------------: | :-------------: | :-------------: 
 2.0              | Yes              | Yes             | Yes
+2.1              | Yes              | Yes             | Yes
 
 ## License
 
@@ -43,4 +44,4 @@ MIT / BSD
 
 ## Author Information
 
- - Tobias Schifftner, @tschifftner
+ - [Tobias Schifftner](https://twitter.com/tschifftner), [ambimax® GmbH](https://www.ambimax.de)
