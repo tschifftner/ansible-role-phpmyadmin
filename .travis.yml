@@ -1,21 +1,25 @@
 ---
-language: python
-python: "2.7"
 sudo: required
 dist: trusty
 
-env:
-  - SITE=test.yml
+language: python
+python: "2.7"
 
-# Install ansible
-addons:
-  apt:
-    packages:
-    - python-pip
+env:
+  - SITE=test.yml ANSIBLE_VERSION=latest
+  - SITE=test.yml ANSIBLE_VERSION=2.1.0.0
+
+branches:
+  only:
+    - master
+
+before_install:
+  - sudo apt-get update -qq
+  - sudo apt-get install -y curl
 
 install:
   # Install Ansible.
-  - pip install ansible
+  - if [ "$ANSIBLE_VERSION" = "latest" ]; then pip install --no-binary ansible ansible; else pip install --no-binary ansible ansible==$ANSIBLE_VERSION; fi
 
   # Add ansible.cfg to pick up roles path.
   - "{ echo '[defaults]'; echo 'roles_path = ../'; } >> ansible.cfg"
@@ -44,8 +48,8 @@ script:
 
   # simple checks (@todo add proper tests)
   - test -e /opt/phpmyadmin/logs
-  - test -e /opt/phpmyadmin/phpMyAdmin-4.5.3.1-all-languages
-  - test -e /opt/phpmyadmin/phpMyAdmin-4.5.3.1-all-languages/config.inc.php
+  - test -e /opt/phpmyadmin/phpMyAdmin-4.6.3-all-languages
+  - test -e /opt/phpmyadmin/phpMyAdmin-4.6.3-all-languages/config.inc.php
   - test -e /opt/phpmyadmin/sessions
   - test -e /opt/phpmyadmin/tmp
   - test -e /opt/phpmyadmin/usr
