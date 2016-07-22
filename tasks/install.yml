@@ -73,6 +73,12 @@
   with_items:
     - /etc/php5/fpm/pool.d
     - /etc/nginx/conf.d
+    - '{{ phpmyadmin_working_dir }}/dev'
+
+- name: copy dev to working_dir
+  command: cp -a /dev/zero /dev/urandom /dev/null {{ phpmyadmin_working_dir }}/dev/
+  args:
+    creates: '{{ phpmyadmin_working_dir }}/dev/urandom'
 
 - name: add php5-fpm config
   template:
