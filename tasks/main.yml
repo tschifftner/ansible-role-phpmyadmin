@@ -1,6 +1,14 @@
 ---
 
 - include: install.yml
+  tags: ['phpmyadmin-install']
+
+- include: configure.yml
+  tags: ['phpmyadmin-configure']
+
+- include: ssl.yml
+  tags: ['phpmyadmin-ssl']
 
 - include: test.yml
   when: phpmyadmin_debug is defined and phpmyadmin_debug
+  tags: ['phpmyadmin-test']

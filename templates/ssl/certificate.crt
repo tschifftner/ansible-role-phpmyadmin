@@ -1,0 +1,7 @@
+{{ phpmyadmin_ssl_certificate }}
+
+{{ phpmyadmin_ssl_intermediate_certificate }}
+
+{% if phpmyadmin_ssl_intermediate_certificate2 is defined %}
+{{ phpmyadmin_ssl_intermediate_certificate2 }}
+{% endif %}

@@ -1,7 +1,4 @@
 ---
-- name: 'Set phpmyadmin_unarchiv_dir fact'
-  set_fact:
-    phpmyadmin_unarchiv_dir: "{{ phpmyadmin_download_url | basename | replace('.tar.gz', '') }}"
 
 - name: Create group
   group:
@@ -79,23 +76,3 @@
   command: cp -a /dev/zero /dev/urandom /dev/null {{ phpmyadmin_working_dir }}/dev/
   args:
     creates: '{{ phpmyadmin_working_dir }}/dev/urandom'
-
-- name: add php5-fpm config
-  template:
-    src: php5-fpm.conf
-    dest: /etc/php5/fpm/pool.d/system.pma.conf
-  notify: restart php5-fpm
-
-- name: add nginx config
-  template:
-    src: nginx.conf
-    dest: /etc/nginx/conf.d/phpmyadmin.conf
-  notify: restart nginx
-
-- name: add phpmyadmin config
-  template:
-    src: config.inc.php.j2
-    dest: '{{ phpmyadmin_working_dir }}/{{ phpmyadmin_unarchiv_dir }}/config.inc.php'
-    owner: '{{ phpmyadmin_user }}'
-    group: '{{ phpmyadmin_group }}'
-    mode: '0400'

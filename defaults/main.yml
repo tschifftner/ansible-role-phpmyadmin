@@ -30,3 +30,21 @@ phpmyadmin_servers:
     compress: false
     AllowNoPassword: false
     hide_db: '(information_schema|mysql|performance_schema)'
+
+phpmyadmin_unarchiv_dir: "{{ phpmyadmin_download_url | basename | replace('.tar.gz', '') }}"
+
+# Nignx
+phpmyadmin_listen: 443
+phpmyadmin_server_name: '{{ ansible_fqdn }}'
+phpmyadmin_ssl_redirect: 'https://{{ phpmyadmin_server_name }}$request_uri'
+
+phpmyadmin_ssl_certificate: ''
+phpmyadmin_ssl_certificate_key: ''
+phpmyadmin_ssl_intermediate_certificate: ''
+phpmyadmin_ssl_root_certificate: ''
+
+phpmyadmin_ssl_save_path: '{{ phpmyadmin_working_dir }}/.ssl'
+phpmyadmin_ssl_certificate_path: '{{ phpmyadmin_ssl_save_path }}/certificate.crt'
+phpmyadmin_ssl_certificate_key_path: '{{ phpmyadmin_ssl_save_path }}/certificate.key'
+phpmyadmin_ssl_trusted_certificate_path: '{{ phpmyadmin_ssl_save_path }}/trustchain.crt'
+    

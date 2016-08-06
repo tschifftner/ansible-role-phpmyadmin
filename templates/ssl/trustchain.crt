@@ -1,0 +1,3 @@
+{{ phpmyadmin_ssl_root_certificate }}
+
+{{ phpmyadmin_ssl_intermediate_certificate }}

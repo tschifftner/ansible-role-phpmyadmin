@@ -1,0 +1,39 @@
+---
+- name: Ensure ssl save paths exist
+  no_log: true
+  file:
+    path: '{{ phpmyadmin_ssl_save_path }}'
+    state: directory
+    owner: root
+    group: www-data
+    mode: '0440'
+  when: phpmyadmin_ssl_save_path is defined
+
+- name: Generate trustchain.crt
+  no_log: true
+  template:
+    src: 'ssl/trustchain.crt'
+    dest: '{{ phpmyadmin_ssl_trusted_certificate_path }}'
+  when: phpmyadmin_ssl_root_certificate != '' and phpmyadmin_ssl_intermediate_certificate != ''
+
+- name: Generate certificate.key
+  no_log: true
+  template:
+    src: 'ssl/certificate.key'
+    dest: '{{ phpmyadmin_ssl_certificate_key_path }}'
+  when: phpmyadmin_ssl_certificate_key != ''
+
+- name: Generate certificate.crt
+  no_log: true
+  template:
+    src: 'ssl/certificate.crt'
+    dest: '{{ phpmyadmin_ssl_certificate_path }}'
+  when: phpmyadmin_ssl_certificate != '' and phpmyadmin_ssl_intermediate_certificate != ''
+
+- name: Generate dhparam.pem for every ssl certificate
+  no_log: true
+  notify: reload nginx
+  shell: openssl dhparam 2048 -out {{ phpmyadmin_ssl_save_path }}/dhparam.pem
+  args:
+    creates: '{{ phpmyadmin_ssl_save_path }}/dhparam.pem'
+  async: 120
