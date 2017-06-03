@@ -34,6 +34,7 @@ phpmyadmin_servers:
 phpmyadmin_unarchiv_dir: "{{ phpmyadmin_download_url | basename | replace('.tar.gz', '') }}"
 
 # Nignx
+phpmyadmin_enable_redirect: true
 phpmyadmin_listen: 443
 phpmyadmin_server_name: '{{ ansible_fqdn }}'
 phpmyadmin_ssl_redirect: 'https://{{ phpmyadmin_server_name }}$request_uri'
