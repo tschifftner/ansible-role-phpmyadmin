@@ -1,5 +1,5 @@
 ---
-phpmyadmin_install_version: '4.6.3'
+phpmyadmin_install_version: '4.7.3'
 
 # See https://www.phpmyadmin.net/downloads/
 phpmyadmin_download_url: 'https://files.phpmyadmin.net/phpMyAdmin/{{ phpmyadmin_install_version }}/phpMyAdmin-{{ phpmyadmin_install_version }}-all-languages.tar.gz'
