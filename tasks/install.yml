@@ -26,6 +26,7 @@
     group: '{{ phpmyadmin_group }}'
     mode: '0755'
     creates: '{{ phpmyadmin_working_dir }}/{{ phpmyadmin_unarchiv_dir }}'
+    validate_certs: no
 
 - name: Ensure setup dir is absent
   file:
